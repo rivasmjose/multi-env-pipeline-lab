@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: staging
+namePrefix: staging-
+
+
+resources:
+- ../../apps/webapp
+
+configMapGenerator:
+- behavior: merge
+  literals:
+  - ENVIRONMENT=staging
+  - VERSION=1.0.0-rc
+  - LOG_LEVEL=info
+  - FEATURE_FLAG_NEW_UI=true
+  name: webapp-config
+
+replicas:
+- count: 2
+  name: webapp
+
+images:
+- name: nginxdemos/hello
+  newTag: latest
+labels:
+- includeSelectors: true
+  pairs:
+    environment: staging
+    team: platform
