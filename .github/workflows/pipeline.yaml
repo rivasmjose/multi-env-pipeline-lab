@@ -105,5 +105,5 @@ jobs:
           kubectl get pods -n prod -l app=webapp
           kubectl get svc -n prod
 
-      - name: "✅ Production deployment complete"
+      - name: "✅ Production deployment complete!"
         run: echo "✅ ¡Despliegue en producción finalizado!"
