@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 namespace: prod
-
 namePrefix: prod-
 
 
@@ -14,8 +13,8 @@ configMapGenerator:
   literals:
   - ENVIRONMENT=production
   - VERSION=1.0.0
-  - LOG_LEVEL=warn
-  - FEATURE_FLAG_NEW_UI=true
+  - LOG_LEVEL=warning
+  - FEATURE_FLAG_NEW_UI=false
   name: webapp-config
 
 replicas:
@@ -25,8 +24,9 @@ replicas:
 images:
 - name: nginxdemos/hello
   newTag: latest
+
 labels:
 - includeSelectors: true
   pairs:
-    environment: production
+    environment: prod
     team: platform
